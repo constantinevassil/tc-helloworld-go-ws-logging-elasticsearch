@@ -30,7 +30,7 @@ spec:
             fieldRef:
               fieldPath: metadata.name
         - name: "ELASTICSEARCH_URL"
-          value: "10.103.188.191:9200"
+          value: "http://10.103.188.191:9200"
         ports:
         - containerPort: 8080
 
