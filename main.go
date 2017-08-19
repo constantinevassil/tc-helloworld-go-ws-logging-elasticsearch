@@ -60,10 +60,10 @@ func main() {
 	http.Handle("/", &viewHandler_helloHandler{
 		Logger: log,
 	})
-	log.Println("tc-helloworld-go-ws-logging-elasticsearch: started, serving at 8080")
+	log.Println("tc-helloworld-go-ws-logging-elasticsearch: started, serving at 1010")
 
-	//fmt.Println("Started, serving at 8080")
-	err = http.ListenAndServe(":8080", nil)
+	//fmt.Println("Started, serving at 1010")
+	err = http.ListenAndServe(":1010", nil)
 	if err != nil {
 		panic("ListenAndServe: " + err.Error())
 	}
