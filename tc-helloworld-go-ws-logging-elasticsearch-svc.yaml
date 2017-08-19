@@ -44,7 +44,7 @@ spec:
   # The ports to map. port is the service port to expose on the cluster IP. targetPort is the port to target on the pods that are part of this service.
   ports:
   - name: http
-    port: 8080
+    port: 1010
     protocol: TCP
   # The label key:value pair that defines the pods to target.
   selector:
