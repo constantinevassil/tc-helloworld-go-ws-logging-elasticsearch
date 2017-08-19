@@ -1,0 +1,53 @@
+#
+# kubectl apply -f tc-helloworld-go-ws/tc-helloworld-go-ws-svc.yaml
+# kubectl get svc
+# NAME                  CLUSTER-IP     EXTERNAL-IP   PORT(S)          AGE
+# kubernetes            10.96.0.1      <none>        443/TCP          4d
+# tc-helloworld-go-ws   10.96.212.78   <nodes>       1010:30260/TCP   5s
+
+# curl 10.0.1.73:30260
+# kubectl get pods
+# NAME                                  READY     STATUS    RESTARTS   AGE
+# tc-helloworld-go-ws-462302505-kv75t   1/1       Running   0          1m
+# kubectl logs tc-helloworld-go-ws-462302505-kv75t
+# time="2017-08-17T23:55:07Z" level=info msg="NAMESPACE:default"
+# time="2017-08-17T23:55:07Z" level=info msg="NODE_NAME:tc-helloworld-go-ws-462302505-kv75t"
+# time="2017-08-17T23:55:07Z" level=info msg="elastic.SetURL:http://10.96.185.105:9200"
+# time="2017-08-17T23:55:07Z" level=info msg="Started, serving at 1010"
+# time="2017-08-17T23:55:52Z" level=info msg="Hello World from Go in minimal Docker container (4.28MB) - tc-helloworld-go-ws - v.1.0, it took 49ns to run"
+# time="2017-08-17T23:55:53Z" level=info msg="Hello World from Go in minimal Docker container (4.28MB) - tc-helloworld-go-ws - v.1.0, it took 47ns to run"
+# time="2017-08-17T23:55:54Z" level=info msg="Hello World from Go in minimal Docker container (4.28MB) - tc-helloworld-go-ws - v.1.0, it took 53ns to run"
+# time="2017-08-17T23:55:54Z" level=info msg="Hello World from Go in minimal Docker container (4.28MB) - tc-helloworld-go-ws - v.1.0, it took 48ns to run"
+
+# kubectl run curl --image=radial/busyboxplus:curl -i --tty
+# If you don't see a command prompt, try pressing enter.
+# [ root@curl-2716574283-5f45r:/ ]$ nslookup tc-helloworld-go-ws
+# Server:    10.96.0.10
+# Address 1: 10.96.0.10 kube-dns.kube-system.svc.cluster.local
+
+# Name:      tc-helloworld-go-ws
+# Address 1: 10.108.175.181 tc-helloworld-go-ws.default.svc.cluster.local
+
+apiVersion: v1
+kind: Service
+metadata:
+  # The name to give to this service.
+  name: tc-helloworld-go-ws-logging-elasticsearch
+  labels:
+    run: tc-helloworld-go-ws-logging-elasticsearch
+spec:
+  # In a production setup, we recommend accessing Elasticsearch through an external Loadbalancer
+  # or through a public IP.
+  # type: LoadBalancer
+  # You could also use NodePort to expose the service at a randomly-generated port
+  type: NodePort
+  # The ports to map. port is the service port to expose on the cluster IP. targetPort is the port to target on the pods that are part of this service.
+  ports:
+  - name: http
+    port: 8080
+    protocol: TCP
+  # The label key:value pair that defines the pods to target.
+  selector:
+    run: tc-helloworld-go-ws-logging-elasticsearch
+  
+
