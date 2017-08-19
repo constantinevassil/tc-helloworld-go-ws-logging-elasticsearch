@@ -32,6 +32,6 @@ spec:
         - name: "ELASTICSEARCH_URL"
           value: "http://10.103.188.191:9200"
         ports:
-        - containerPort: 8080
+        - containerPort: 1010
 
          
