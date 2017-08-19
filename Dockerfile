@@ -6,5 +6,5 @@ ENV NAMESPACE namespace
 ENV NODE_NAME node_name
 #
 ADD        tc-helloworld-go-ws-logging-elasticsearch tc-helloworld-go-ws-logging-elasticsearch
-EXPOSE     8080
+EXPOSE     1010
 ENTRYPOINT ["/tc-helloworld-go-ws-logging-elasticsearch"]
