@@ -14,7 +14,7 @@ spec:
       # the name is not included in the meta data as a unique name is
       # generated from the deployment name
       labels:
-        app: tc-helloworld-go-ws-logging-elasticsearch
+        run: tc-helloworld-go-ws-logging-elasticsearch
     spec:
       containers:
       - name: tc-helloworld-go-ws-logging-elasticsearch
