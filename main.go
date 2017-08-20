@@ -6,6 +6,7 @@ package main
 
 // dep init
 import (
+	"context"
 	"fmt"
 	"github.com/Sirupsen/logrus"
 	"gopkg.in/olivere/elastic.v5"
@@ -46,13 +47,30 @@ func main() {
 	log.Println("NODE_NAME:" + envNODE_NAME)
 	log.Println("elastic.SetURL:" + envELASTICSEARCH_URL)
 
-	elastic.SetSniff(false)
-	client, err := elastic.NewClient(elastic.SetURL(envELASTICSEARCH_URL)) // http://10.96.185.105:9200 10.0.1.73:30138  http://10.32.0.8:9200
+	// elastic.SetSniff(false)
+	// client, err := elastic.NewClient(elastic.SetURL(envELASTICSEARCH_URL)) // http://10.96.185.105:9200 10.0.1.73:30138  http://10.32.0.8:9200
+	// if err != nil {
+	// 	log.Panic(err)
+	// }
+
+	// Obtain a client for an Elasticsearch cluster of one node,
+	// running on envELASTICSEARCH_URL. Do not run the sniffer.
+	// Set the healthcheck interval to 10s. When requests fail,
+	// retry 5 times. Print error messages to os.Stderr and informational
+	// messages to os.Stdout.
+	client, err := elastic.NewClient(
+		elastic.SetURL(envELASTICSEARCH_URL),
+		elastic.SetSniff(false),
+		elastic.SetHealthcheckInterval(10*time.Second),
+	//elastic.SetRetrier(NewCustomRetrier()),
+	//elastic.SetErrorLog(log.New(os.Stderr, "ELASTIC ", log.LstdFlags)),
+	//elastic.SetInfoLog(log.New(os.Stdout, "", log.LstdFlags))
+	)
 	if err != nil {
 		log.Panic(err)
 	}
-	
-        // logrus.PanicLevel,
+
+	// logrus.PanicLevel,
 	// logrus.FatalLevel,
 	// logrus.ErrorLevel,
 	// logrus.WarnLevel,
@@ -65,20 +83,12 @@ func main() {
 	}
 	log.Hooks.Add(hook)
 
-	
-	//
-	// Create an index
-	_, err = client.CreateIndex("tc-helloworld-go-ws-logging-elasticsearch-log").Do()
-	if err != nil {
-		// Handle error
-		log.Panic(err)
-	}
-        for index := 0; index < 100; index++ {
+	for index := 0; index < 100; index++ {
 		logrus.Infof("Test msg %d", time.Now().Unix())
 	}
 
 	time.Sleep(5 * time.Second)
-	
+
 	termQuery := elastic.NewTermQuery("Host", "localhost")
 	searchResult, err := client.Search().
 		Index("tc-helloworld-go-ws-logging-elasticsearch-log").
@@ -93,8 +103,7 @@ func main() {
 	}
 
 	//
-	
-	
+
 	http.Handle("/", &viewHandler_helloHandler{
 		Logger: log,
 	})
@@ -106,4 +115,3 @@ func main() {
 		panic("ListenAndServe: " + err.Error())
 	}
 }
-
