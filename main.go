@@ -51,12 +51,50 @@ func main() {
 	if err != nil {
 		log.Panic(err)
 	}
+	
+        // logrus.PanicLevel,
+	// logrus.FatalLevel,
+	// logrus.ErrorLevel,
+	// logrus.WarnLevel,
+	// logrus.InfoLevel,
+	// logrus.DebugLevel,
+
 	hook, err := elogrus.NewElasticHook(client, "localhost", logrus.DebugLevel, "tc-helloworld-go-ws-logging-elasticsearch-log")
 	if err != nil {
 		log.Panic(err)
 	}
 	log.Hooks.Add(hook)
 
+	
+	//
+	// Create an index
+	_, err = client.CreateIndex("tc-helloworld-go-ws-logging-elasticsearch-log").Do()
+	if err != nil {
+		// Handle error
+		log.Panic(err)
+	}
+        for index := 0; index < 100; index++ {
+		logrus.Infof("Test msg %d", time.Now().Unix())
+	}
+
+	time.Sleep(5 * time.Second)
+	
+	termQuery := elastic.NewTermQuery("Host", "localhost")
+	searchResult, err := client.Search().
+		Index("tc-helloworld-go-ws-logging-elasticsearch-log").
+		Query(termQuery).
+		Do(context.TODO())
+
+	if searchResult.Hits.TotalHits != 100 {
+		//t.Error("Not all logs pushed to elastic")
+		//t.FailNow()
+		err := "Not all logs pushed to elastic"
+		log.Panic(err)
+	}
+
+	//
+	
+	
 	http.Handle("/", &viewHandler_helloHandler{
 		Logger: log,
 	})
