@@ -6,7 +6,7 @@ package main
 
 // dep init
 import (
-	"context"
+	//"context"
 	"fmt"
 	"github.com/Sirupsen/logrus"
 	"gopkg.in/olivere/elastic.v5"
@@ -83,24 +83,24 @@ func main() {
 	}
 	log.Hooks.Add(hook)
 
-	for index := 0; index < 100; index++ {
-		logrus.Infof("Test msg %d", time.Now().Unix())
-	}
+	// for index := 0; index < 100; index++ {
+	// 	logrus.Infof("Test msg %d", time.Now().Unix())
+	// }
 
-	time.Sleep(5 * time.Second)
+	// time.Sleep(5 * time.Second)
 
-	termQuery := elastic.NewTermQuery("Host", "localhost")
-	searchResult, err := client.Search().
-		Index("tc-helloworld-go-ws-logging-elasticsearch-log").
-		Query(termQuery).
-		Do(context.TODO())
+	// termQuery := elastic.NewTermQuery("Host", "localhost")
+	// searchResult, err := client.Search().
+	// 	Index("tc-helloworld-go-ws-logging-elasticsearch-log").
+	// 	Query(termQuery).
+	// 	Do(context.TODO())
 
-	if searchResult.Hits.TotalHits != 100 {
-		//t.Error("Not all logs pushed to elastic")
-		//t.FailNow()
-		err := "Not all logs pushed to elastic"
-		log.Panic(err)
-	}
+	// if searchResult.Hits.TotalHits != 100 {
+	// 	//t.Error("Not all logs pushed to elastic")
+	// 	//t.FailNow()
+	// 	err := "Not all logs pushed to elastic"
+	// 	log.Panic(err)
+	// }
 
 	//
 
