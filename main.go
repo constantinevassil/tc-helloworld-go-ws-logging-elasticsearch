@@ -41,11 +41,13 @@ func main() {
 	envNAMESPACE := os.Getenv("NAMESPACE")
 	envNODE_NAME := os.Getenv("NODE_NAME")
 	envELASTICSEARCH_URL := os.Getenv("ELASTICSEARCH_URL")
+	envELASTICSEARCH_LOG_INDEX_NAME := os.Getenv("ELASTICSEARCH_LOG_INDEX_NAME")
 
 	log := logrus.New()
 	log.Println("NAMESPACE:" + envNAMESPACE)
 	log.Println("NODE_NAME:" + envNODE_NAME)
 	log.Println("elastic.SetURL:" + envELASTICSEARCH_URL)
+	log.Println("ELASTICSEARCH_LOG_INDEX_NAME:" + envELASTICSEARCH_LOG_INDEX_NAME)
 
 	// elastic.SetSniff(false)
 	// client, err := elastic.NewClient(elastic.SetURL(envELASTICSEARCH_URL)) // http://10.96.185.105:9200 10.0.1.73:30138  http://10.32.0.8:9200
@@ -77,7 +79,7 @@ func main() {
 	// logrus.InfoLevel,
 	// logrus.DebugLevel,
 
-	hook, err := elogrus.NewElasticHook(client, "localhost", logrus.DebugLevel, "tc-helloworld-go-ws-logging-elasticsearch-log")
+	hook, err := elogrus.NewElasticHook(client, "localhost", logrus.DebugLevel, envELASTICSEARCH_LOG_INDEX_NAME)
 	if err != nil {
 		log.Panic(err)
 	}
