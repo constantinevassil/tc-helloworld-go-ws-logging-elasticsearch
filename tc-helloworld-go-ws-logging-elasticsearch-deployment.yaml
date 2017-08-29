@@ -4,6 +4,7 @@
 # 
 # image: topconnector/tc-helloworld-go-ws-logging-elasticsearch:v1
 
+
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
