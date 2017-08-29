@@ -1,6 +1,6 @@
 # kubectl run tc-helloworld-go-ws --image=topconnector/tc-helloworld-go-ws:v1 image-pull-policy=Always --port=1010 --record
 # OR
-# kubectl apply -f tc-helloworld-go-ws/tc-helloworld-go-ws-logging-elasticsearch-deployment.yaml
+# kubectl apply -f tc-helloworld-go-ws-logging-elasticsearch-deployment.yaml
 # 
 
 apiVersion: extensions/v1beta1
@@ -18,8 +18,9 @@ spec:
     spec:
       containers:
       - name: tc-helloworld-go-ws-logging-elasticsearch
-        image: topconnector/tc-helloworld-go-ws-logging-elasticsearch:v1
-        imagePullPolicy: Always
+        image: tcmb/tc-helloworld-go-ws-logging-elasticsearch:v1
+        # image: topconnector/tc-helloworld-go-ws-logging-elasticsearch:v1
+       imagePullPolicy: Always
         env:
         - name: NAMESPACE
           valueFrom:
@@ -31,6 +32,8 @@ spec:
               fieldPath: metadata.name
         - name: "ELASTICSEARCH_URL"
           value: "http://10.103.188.191:9200"
+        - name: "ELASTICSEARCH_LOG_INDEX_NAME"
+          value: "tc-helloworld-go-ws-logging-elasticsearch-log"
         ports:
         - containerPort: 1010
 
