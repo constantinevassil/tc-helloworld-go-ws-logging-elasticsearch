@@ -21,7 +21,7 @@ spec:
       containers:
       - name: tc-helloworld-go-ws-logging-elasticsearch
         image: tcmb/tc-helloworld-go-ws-logging-elasticsearch:v1
-       imagePullPolicy: Always
+        imagePullPolicy: Always
         env:
         - name: NAMESPACE
           valueFrom:
