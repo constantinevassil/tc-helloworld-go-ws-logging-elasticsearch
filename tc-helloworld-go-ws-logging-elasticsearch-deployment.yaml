@@ -2,6 +2,7 @@
 # OR
 # kubectl apply -f tc-helloworld-go-ws-logging-elasticsearch-deployment.yaml
 # 
+# image: topconnector/tc-helloworld-go-ws-logging-elasticsearch:v1
 
 apiVersion: extensions/v1beta1
 kind: Deployment
@@ -19,7 +20,6 @@ spec:
       containers:
       - name: tc-helloworld-go-ws-logging-elasticsearch
         image: tcmb/tc-helloworld-go-ws-logging-elasticsearch:v1
-        # image: topconnector/tc-helloworld-go-ws-logging-elasticsearch:v1
        imagePullPolicy: Always
         env:
         - name: NAMESPACE
