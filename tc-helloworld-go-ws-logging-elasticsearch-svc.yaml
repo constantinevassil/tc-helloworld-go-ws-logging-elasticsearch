@@ -1,5 +1,5 @@
 #
-# kubectl apply -f tc-helloworld-go-ws/tc-helloworld-go-ws-svc.yaml
+# kubectl apply -f tc-helloworld-go-ws/tc-helloworld-go-ws-logging-elasticsearch-svc.yaml
 # kubectl get svc
 # NAME                  CLUSTER-IP     EXTERNAL-IP   PORT(S)          AGE
 # kubernetes            10.96.0.1      <none>        443/TCP          4d
